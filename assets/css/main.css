@@ -1,0 +1,171 @@
+html,
+body {
+  background-image: url("../img/bg.png");
+  background-size: cover; /* 铺满屏幕 */
+  background-position: center; /* 居中 */
+  background-attachment: fixed; /* 固定不动，内容在上面滚动 */
+  background-color: #333; /* 图片加载前的占位色 */
+}
+*,
+a,
+p {
+  margin: 0;
+  padding: 0;
+  user-select: none; /* 禁止选中文字 */
+  text-decoration: none;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   2. 核心区块样式 (毛玻璃卡片)
+   ========================================= */
+.cards {
+  /* 基础形态 */
+  border-radius: 6px;
+  /* 半透明黑色背景 - 关键：末尾40代表透明度 */
+  background-color: #00000040;
+  /* 背景模糊滤镜 - 核心毛玻璃效果 */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* 兼容 Safari */
+
+  /* 初始状态 */
+  transform: scale(1);
+  transition:
+    backdrop-filter 0.3s,
+    transform 0.3s,
+    background-color 0.3s; /* 增加背景色过渡 */
+
+  /* 可选：增加一点内边距让内容不贴边 */
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* 增加微弱边框增强质感 */
+}
+.cards-content {
+  /* 基础形态 */
+  border-radius: 6px;
+  background-color: #00000040;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* --- 修改部分开始 --- */
+  /* 1. 放弃固定宽度，改用 flex 属性 */
+  /* flex: 1 表示让每个卡片平均分配父容器的剩余空间 */
+  width: var(--w,300px);
+  flex:1;
+
+  /* 2. 设置一个最小宽度，防止卡片在手机上变得太窄 */
+  min-width: 250px;
+
+  /* 3. 保留高度和滚动设置 */
+  height: var(--h,200px);
+  overflow-y: auto;
+  /* --- 修改部分结束 --- */
+
+  /* 初始状态 */
+  transform: scale(1);
+  transition:
+    backdrop-filter 0.3s,
+    transform 0.3s,
+    background-color 0.3s;
+}
+/* 鼠标悬停：轻微放大 */
+.cards:hover {
+  transform: scale(1.01);
+  background-color: #00000060; /* 悬停时稍微变亮/变实 */
+}
+
+/* 鼠标按下：轻微缩小 (按压感) */
+.cards:active {
+  transform: scale(0.98);
+}
+.cards-content:hover {
+  transform: scale(1.01);
+  background-color: #00000060; /* 悬停时稍微变亮/变实 */
+}
+
+/* 鼠标按下：轻微缩小 (按压感) */
+.cards-content:active {
+  transform: scale(0.98);
+}
+
+/* =========================================
+   3. 布局与响应式 (还原 SCSS 逻辑)
+   ========================================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto; /* 居中显示 */
+  height: 100%;
+  display: flex; /* 假设使用 Flex 布局排列卡片 */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 20px; 
+}
+
+/* 小于 1280px */
+@media (max-width: 1280px) {
+  .container {
+    max-width: 1000px;
+  }
+}
+
+/* 小于 992px */
+@media (max-width: 992px) {
+  .container {
+    max-width: 900px;
+  }
+}
+
+/* 小于 720px (移动端) */
+@media (max-width: 720px) {
+  .container {
+    display: block; /* 移动端改为垂直排列 */
+    overflow-y: auto; /* 允许垂直滚动 */
+  }
+  .xs-hidden {
+    display: none;
+  }
+  .cards {
+    margin-bottom: 15px; /* 移动端增加间距 */
+  }
+}
+
+/* =========================================
+   4. 辅助工具类
+   ========================================= */
+/* 文字超出省略号 */
+.text-hidden {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #eeeeee;
+}
+.align-left {
+    float: left;
+    padding-left:20px ;
+}
+
+/* 靠右 */
+.align-right {
+    float: right;
+    padding-right: 20px;
+}
+.avatar-user {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0; /* 防止被压缩 */
+}
