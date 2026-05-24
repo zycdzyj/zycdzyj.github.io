@@ -56,7 +56,7 @@ p {
   flex:1;
 
   /* 2. 设置一个最小宽度，防止卡片在手机上变得太窄 */
-  min-width: 250px;
+  /* min-width: 250px; */
 
   /* 3. 保留高度和滚动设置 */
   height: var(--h,200px);
@@ -163,8 +163,8 @@ p {
     padding-right: 20px;
 }
 .avatar-user {
-    width: 90px;
-    height: 90px;
+    width: var(--r,90px);
+    height:var(--r,90px);
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0; /* 防止被压缩 */
