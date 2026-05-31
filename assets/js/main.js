@@ -59,6 +59,96 @@ const text = [
   "时光是无鞍的野马，奔驰起来像闪电，最好的骑手都无法驾驭。",
   "如果喜欢谁，就满世界去找她，别等她来找你，她可能也在等你。"
 ];
+
 const randomIndex = Math.floor(Math.random() * text.length);
 // ✅ 修正后的随机获取逻辑：使用 gsap.utils.random，并将最大值设为 29
 textElement.textContent = text[randomIndex];
+
+function updateClock() {
+    const now = new Date();
+    
+    // 1. 在函数内部获取最新的时间
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;    
+    const day = now.getDate();
+    
+    // 2. 获取时间字符串
+    const timeString = now.toLocaleTimeString(); 
+    
+    // 3. 使用反引号 ` ` 包裹，并用 ${} 嵌入变量
+    const dateString = `${year}年${month}月${day}日`;
+    
+    // 4. 更新到页面上
+    document.getElementById('time').innerText = timeString;
+    document.getElementById('date').innerText = dateString;
+}
+// 页面加载时立即执行一次，避免 1 秒的延迟空白
+    updateClock();
+// 开启定时器，每秒（1000毫秒）更新一次
+    setInterval(updateClock, 1000);
+
+// 1. 获取页面中的各个元素
+const audio = document.getElementById('audio');
+const playBtn = document.getElementById('play-btn');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const progressBar = document.getElementById('progress-bar');
+const currentTimeEl = document.querySelector('.current-time');
+const totalDurationEl = document.querySelector('.total-duration');
+const playIcon = document.querySelector('.play-icon');
+const pauseIcon = document.querySelector('.pause-icon');
+
+// 2. 播放与暂停功能
+function togglePlay() {
+    if (audio.paused) {
+        audio.play();
+        playIcon.style.display = 'none';  // 隐藏播放图标
+        pauseIcon.style.display = 'block'; // 显示暂停图标
+    } else {
+        audio.pause();
+        playIcon.style.display = 'block'; // 显示播放图标
+        pauseIcon.style.display = 'none';  // 隐藏暂停图标
+    }
+}
+playBtn.addEventListener('click', togglePlay);
+
+// 3. 格式化时间（将秒数转为 0:00 格式）
+function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// 4. 当音频元数据加载完成后，更新总时长
+audio.addEventListener('loadedmetadata', () => {
+    totalDurationEl.textContent = formatTime(audio.duration);
+});
+
+// 5. 实时更新进度条和当前播放时间
+audio.addEventListener('timeupdate', () => {
+    const current = audio.currentTime;
+    const duration = audio.duration;
+    // 更新进度条的百分比
+    progressBar.value = (current / duration) * 100;
+    // 更新当前时间显示
+    currentTimeEl.textContent = formatTime(current);
+});
+
+// 6. 拖动进度条跳转播放位置
+progressBar.addEventListener('input', () => {
+    const duration = audio.duration;
+    // 根据拖动的百分比计算出目标时间
+    audio.currentTime = (progressBar.value / 100) * duration;
+});
+
+// 7. 预留上一首、下一首的点击事件（等你有多首歌曲时可以扩展）
+prevBtn.addEventListener('click', () => {
+    console.log('点击了上一首');
+    // 这里可以写切换上一首歌曲的逻辑
+});
+
+nextBtn.addEventListener('click', () => {
+    console.log('点击了下一首');
+    // 这里可以写切换下一首歌曲的逻辑
+});
