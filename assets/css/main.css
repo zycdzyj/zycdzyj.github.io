@@ -35,50 +35,51 @@ p {
 
 .cards-content {
   /* 基础形态 */
-  border-radius: 6px;
-  background-color: #00000040;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px; /* 稍微增大圆角，更符合现代玻璃质感 */
+  background-color: rgba(0, 0, 0, 0.25); /* 使用 rgba 替代十六进制，透明度更可控 */
+  backdrop-filter: blur(12px) saturate(150%); /* 增加饱和度，让透出的背景色彩更鲜艳 */
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   
-  /* 核心修改：删掉 margin，间距统一由父容器的 gap 接管 */
-  /* margin: var(--p,20px);  <-- 删除这行，避免间距叠加 */
-  /* margin-bottom: 40px; 如果你需要整体底部留白可以保留，否则建议也删掉 */
+  /* 真实感核心：添加半透明边框和内阴影，模拟玻璃边缘的反光 */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2), /* 外部投影，增加悬浮感 */
+    inset 0 0 12px rgba(255, 255, 255, 0.05); /* 内部微光，模拟玻璃厚度 */
 
-  /* --- 核心修改部分 --- */
+  /* 核心修改：删掉 margin，间距统一由父容器的 gap 接管 */
   width: var(--w, 300px);
   flex: 1;
-
-
   height: var(--h, 200px);
   overflow-y: auto;
-  /* --- 修改部分结束 --- */
 
   /* 初始状态 */
-  transform: scale(1);
-  transition:
-    backdrop-filter 0.3s,
-    transform 0.3s,
-    background-color 0.3s;
+  transform: scale(1) translateY(0);
+  /* 优化过渡：使用 cubic-bezier 让动画更有弹性，增加 box-shadow 过渡 */
+  transition: 
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
-/* 鼠标悬停：轻微放大 */
-.cards:hover {
-  transform: scale(1.01);
-  background-color: #00000060; /* 悬停时稍微变亮/变实 */
+
+/* 鼠标悬停：轻微上浮并增强光影 */
+.cards-content:hover {
+  transform: scale(1.02) translateY(-4px); /* 向上浮起 4px，增强立体感 */
+  background-color: rgba(0, 0, 0, 0.35); 
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3), /* 悬停时阴影加深、范围变大 */
+    inset 0 0 15px rgba(255, 255, 255, 0.08);
+}
+
+/* 鼠标按下：快速回弹缩小，模拟真实的物理按压感 */
+.cards-content:active {
+  transform: scale(0.98) translateY(0);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* 按下时阴影收缩，贴近桌面 */
+  transition-duration: 0.1s; /* 按下时的反馈需要比悬停更快 */
 }
 
 /* 鼠标按下：轻微缩小 (按压感) */
 .cards:active {
-  transform: scale(0.98);
-}
-.cards-content:hover {
-  transform: scale(1.01);
-  background-color: #00000060; /* 悬停时稍微变亮/变实 */
-}
-
-/* 鼠标按下：轻微缩小 (按压感) */
-.cards-content:active {
   transform: scale(0.98);
 }
 
