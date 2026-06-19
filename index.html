@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zycdzyj's HomePage</title>
+    <title>个人主页</title>
+    <!-- 保持原有的CSS链接 -->
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -21,15 +21,22 @@
       text-shadow: 0 2px 10px rgba(0,0,0,0.3);text-align: center;
     "><p>Loading . . .</p><p>  Welcome to zycdzyj's home page :)</p></div>
   </div>
-    <div class="align-left">
-<div class="container">
-    <img src="assets/img/zycdzyj.jpg" class="avatar-user" alt="用户头像">
-    <p style="font-size: 60px">zycdzyj</p>
-</div>
-    <div class="container">
+    <!-- 页面主容器 -->
+    <div class="main-container">
 
-        <div class="cards-content">
-            <h2>个人介绍:</h2>
+        <!-- ================= 左侧区域 (Left Panel) ================= -->
+        <div class="left-panel">
+
+            <!-- 1. 用户名 -->
+<div class="user-name-box cards-content">
+    <img src="assets/img/zycdzyj.jpg" class="avatar" style="--r:70px;" />
+    <h1 class="text-hide">zycdzyj</h1>
+</div>
+
+            <!-- 2. 第一行：个人介绍 & 个人项目 -->
+            <div class="row-split">
+<div class="box box-intro cards-content "style='--a:180px;'>
+    <span class="label">个人介绍</span>
         <p class="text-hidden" >Github开发者</p>
         <p class="text-hidden" >Python编程爱好者</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
         <p class="text-hidden" >Python编程学习者</p>
@@ -40,106 +47,70 @@
         <p class="text-hidden">soulmask</p>
         <p class="text-hidden" >科创大冤种</p>
         <p class="text-hidden" >喜欢女生</p>
-        </div>
-        <div class="cards-content">
-            <h2>个人项目:</h2>
+</div>
+
+                <div class="box box-project cards-content">
+                    <span class="label">个人项目</span>
         <p class="text-hidden" title="破晓音乐 v1.50 - 点击访问">破晓音乐 v1.50 <a href="https://github.com/zycdzyj/Daybreakmusic/">-点击访问</a></p>
         <p class="text-hidden" title="宁波科创中学(非官网) - 点击访问">宁波科创中学(非官网) <a href="https://github.com/gh-nbkczx/gh-nbkczx.github.io">-点击访问</a></p>
         <p class="text-hidden" title="个人主页 - 点击访问">个人主页 <a href="https://github.com/zycdzyj/personalwebsite">-点击访问</a></p>
         <p class="text-hidden" title="宁波科创中学静态博客管理器(测试) - 点击访问">宁波科创中学静态博客管理器(测试) <a href="https://github.com/zycdzyj/artical_maker">-点击访问</a></p>
-        </div>
-
-
-        </div>
-        <div class="cards-content" style="--w:1000px">
-            <h1>空间签名</h1>
-            <h3 id="my-text" >NONE!</h3>
-        </div>
-                <div class="cards-content" style="--w:1000px">
-            <h1>文章</h1>
-            <section class="text-hidden"><p>hello world</p></section>
-        </div>
-    </div>
-            <div class="align-right">
-        <div class="container">
-            <p style="font-size: 60px">网站列表</p>
-
+                </div>
             </div>
-                        <div class=" cards-content align-left container " style="--w:100px;--h:100px">
-                            
-                <a href="https://yandex.com"><img src="assets/img/yandex.png" class="avatar-user" alt="yandex" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                            
-                <a href="https://github.com"><img src="assets/img/github.png" class="avatar-user" alt="github" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                            
-                <a href="https://www.ip138.com/"><img src="assets/img/ip138.png" class="avatar-user" alt="ip138" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                            
-                <a href="https://www.mcjs.cc/"><img src="assets/img/jsmc.png" class="avatar-user" alt="mcjs" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                                <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                            
-                <a href="https://www.aliyun.com/"><img src="assets/img/aly.jpg" class="avatar-user" alt="aly" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-        <div>
-                <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://www.bilibili.com/"><img src="assets/img/bilbil.png" class="avatar-user" alt="bilbil" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://www.instagram.com/"><img src="assets/img/ins.png" class="avatar-user" alt="ins" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://www.youtube.com/"><img src="assets/img/youtube.png" class="avatar-user" alt="youtube" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://www.x.com/"><img src="assets/img/x.png" class="avatar-user" alt="x" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://www.wikipedia.org/"><img src="assets/img/wikipedia.png" class="avatar-user" alt="wikipedia" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-        </div>
-        <div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://filehelper.weixin.qq.com/"><img src="assets/img/wx.png" class="avatar-user" alt="wechat" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://tim.qq.com/"><img src="assets/img/tim.jpg" class="avatar-user" alt="tim" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://telegram.org/"><img src="assets/img/tg.ico" class="avatar-user" alt="telegram" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://www.whatsapp.com/"><img src="assets/img/wa.webp" class="avatar-user" alt="whats app" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-                        <div class=" cards-content align-left container" style="--w:100px;--h:100px">
-                <a href="https://www.google.com"><img src="assets/img/google.png" class="avatar-user" alt="google" style="--r:40px;" target="_blank" rel="noopener"></a>
-                
-        </div>
-        </div>
-        <div class="cards-content container" style="--w:600px;--h:150px">
-                <h2 id="time">time</h2>
-                <h2 id="date">date</h2>
+
+            <!-- 3. 空间签名 -->
+            <div class="box box-signature cards-content">
+                <span class="label">空间签名</span>
+                <p class="content-text text-hide" id="my-text"></p>
+            </div>
+
+            <!-- 4. 文章区域 -->
+            <div class="box box-article cards-content">
+                <span class="label">文章</span>
+                <div class="article-list">
+                    <!-- 原有的文章列表循环 -->
+                    <div class="article-item text-hide">文章标题示例 1</div>
+                    <div class="article-item text-hide">文章标题示例 2</div>
+                </div>
+            </div>
+
         </div>
 
-<div class="cards-content music-player container" style="--w:600px;--h:240px">
+        <!-- ================= 右侧区域 (Right Panel) ================= -->
+        <div class="right-panel">
+
+            <!-- 5. 网站列表 (前9个) -->
+            <div class="box box-links cards-content">
+                <span class="label">网站列表</span>
+                <div class="link-grid">
+                    <a href="https://yandex.com" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/yandex.png" alt="yandex"></a>
+                    <a href="https://github.com" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/github.png" alt="github"></a>
+                    <a href="https://www.ip138.com/" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/ip138.png" alt="ip138"></a>
+                    <a href="https://www.mcjs.cc/" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/jsmc.png" alt="mcjs"></a>
+                    <a href="https://www.aliyun.com/" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/aly.jpg" alt="aly"></a>
+                    <a href="https://www.bilibili.com/" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/bilbil.png" alt="bilbil"></a>
+                    <a href="https://www.instagram.com/" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/ins.png" alt="ins"></a>
+                    <a href="https://www.youtube.com/" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/youtube.png" alt="youtube"></a>
+                    <a href="https://www.x.com/" class="link-item avatar text-hidden" style="--r:100px"><img src="assets/img/x.png" alt="x"></a>
+
+                </div>
+            </div>
+
+            <!-- 6. 时间轴 -->
+            <div class="box box-timeline cards-content">
+                <span class="label">时间</span>
+                <div class="">
+                    <!-- 原有的时间轴代码 -->
+                    <ul>
+                        <h3 class="text-hide" id="time"></h3>
+                        <h3 class="text-hide" id="date"></h3>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 7. 音乐播放器 -->
+<div class="cards-content music-player container music-card user">
+
   <!-- 隐藏的音频标签 (使用你提供的网易云外链) -->
   <audio id="audio" src="http://music.163.com/song/media/outer/url?id=1325892124.mp3"></audio>
 
@@ -167,9 +138,9 @@
   </div>
 </div>
 </div>
+    </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-        <script src="assets/js/main.js"></script>
+    <!-- 保持原有的JS脚本引用 -->
+    <script src="assets/js/main.js"></script>
 </body>
-
 </html>

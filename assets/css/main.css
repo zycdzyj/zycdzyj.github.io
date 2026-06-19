@@ -1,248 +1,288 @@
-html,
+/* 全局重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a, 
+a:link, 
+a:visited, 
+a:hover, 
+a:active, 
+a:focus {
+    text-decoration: none !important; /* 去除下划线，!important 确保强制覆盖其他框架样式 */
+    color: #ffffff !important;        /* 强制设为纯白色 */
+}
 body {
-  background-image: url("../img/bg.png");
-  background-size: cover; /* 铺满屏幕 */
-  background-position: center; /* 居中 */
-  background-attachment: fixed; /* 固定不动，内容在上面滚动 */
-  background-color: #333; /* 图片加载前的占位色 */
-}
-*,
-a,
-p {
-  margin: 0;
-  padding: 0;
-  user-select: none; /* 禁止选中文字 */
-  text-decoration: none;
-  color: #fff;
-  box-sizing: border-box;
+    background: url('../img/bg.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: "Microsoft YaHei", sans-serif;
+    color:white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-/* =========================================
-   2. 核心区块样式 (毛玻璃卡片)
-   ========================================= */
-.container {
-  max-width: 1200px;
-  margin: 0 auto; /* 居中显示 */
-  height: 100%;
-  display: flex; /* 假设使用 Flex 布局排列卡片 */
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  gap: 20px; 
+/* --- 核心布局 Grid --- */
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
 }
 
+@media (max-width: 768px) {
+    .main-container {
+        grid-template-columns: 1fr;
+    }
+}
 
+/* --- 通用卡片样式 (毛玻璃效果) --- */
 .cards-content {
-  /* 基础形态 */
-  border-radius: 12px; /* 稍微增大圆角，更符合现代玻璃质感 */
-  background-color: rgba(0, 0, 0, 0.25); /* 使用 rgba 替代十六进制，透明度更可控 */
-  backdrop-filter: blur(12px) saturate(150%); /* 增加饱和度，让透出的背景色彩更鲜艳 */
-  -webkit-backdrop-filter: blur(12px) saturate(150%);
-  padding: 20px;
-  
-  /* 真实感核心：添加半透明边框和内阴影，模拟玻璃边缘的反光 */
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.2), /* 外部投影，增加悬浮感 */
-    inset 0 0 12px rgba(255, 255, 255, 0.05); /* 内部微光，模拟玻璃厚度 */
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 0 12px rgba(255, 255, 255, 0.05);
+    
+    /* 1. 初始状态：设置基准缩放和位移 */
+    transform: scale(1) translateY(0);
+    
+    /* 2. 过渡动画：让 transform 和 box-shadow 的变化平滑发生 */
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                background-color 0.3s ease, 
+                box-shadow 0.3s ease;
 
-  /* 核心修改：删掉 margin，间距统一由父容器的 gap 接管 */
-  width: var(--w, 300px);
-  flex: 1;
-  height: var(--h, 200px);
-  overflow-y: auto;
-
-  /* 初始状态 */
-  transform: scale(1) translateY(0);
-  /* 优化过渡：使用 cubic-bezier 让动画更有弹性，增加 box-shadow 过渡 */
-  transition: 
-    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    background-color 0.3s ease,
-    box-shadow 0.3s ease;
+    /* 核心：锁死宽度，防止 Grid 被横向撑破，但绝不限高 */
+    width: 100%;
+    min-width: 0; /* 允许 Grid 子项收缩 */
+    max-height: var(--a);
+    overflow-y: auto;
 }
 
-/* 鼠标悬停：轻微上浮并增强光影 */
+/* 👇 3. 悬停状态：向上浮动 + 轻微放大 + 阴影加深 */
 .cards-content:hover {
-  transform: scale(1.02) translateY(-4px); /* 向上浮起 4px，增强立体感 */
-  background-color: rgba(0, 0, 0, 0.35); 
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.3), /* 悬停时阴影加深、范围变大 */
-    inset 0 0 15px rgba(255, 255, 255, 0.08);
+    transform: translateY(-6px) scale(1.02); /* 向上移动6px，放大至1.02倍 */
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.08); /* 阴影加深，增强立体浮起感 */
 }
 
-/* 鼠标按下：快速回弹缩小，模拟真实的物理按压感 */
-.cards-content:active {
-  transform: scale(0.98) translateY(0);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* 按下时阴影收缩，贴近桌面 */
-  transition-duration: 0.1s; /* 按下时的反馈需要比悬停更快 */
+/* 👇 核心修复：合并后的单行省略号样式，只针对 p.text-hidden */
+.cards-content p.text-hidden {
+    display: block !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin: 4px 0;
+    font-size: 14px;
+    line-height: 1.5;
+
 }
 
-/* 鼠标按下：轻微缩小 (按压感) */
-.cards:active {
-  transform: scale(0.98);
+/* 标签文字样式 */
+.label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
-/* =========================================
-   3. 布局与响应式 (还原 SCSS 逻辑)
-   ========================================= */
-.container {
-  max-width: 1200px;
-  margin: 0 auto; /* 居中显示 */
-  height: 100%;
-  display: flex; /* 假设使用 Flex 布局排列卡片 */
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  
+/* --- 左侧面板细节 --- */
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.user-name-box {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    gap: 15px;           /* 头像和文字紧挨着，中间留 15px 间距 */
+    
+    /* 👇 核心：不要 justify-content: center，让内容自然靠左紧挨 */
+    /* 并且让宽度只等于内容的宽度，方便下一步整体居中 */
+    width: fit-content;  
+    margin: 0 auto;      /* 让这个紧凑的组合体在卡片里水平居中 */
+    
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+.row-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-/* 小于 1280px */
-@media (max-width: 1280px) {
-  .container {
-    max-width: 1000px;
-  }
+/* 👇 统一设置基础最小高度，保证布局不塌陷 */
+.box-intro, .box-project, .box-signature, .box-article {
+    min-height: 100px; 
 }
 
-/* 小于 992px */
-@media (max-width: 992px) {
-  .container {
-    max-width: 900px;
-  }
+/* 👇 单独拎出 box-intro 精准限高，权重更高，绝对生效 */
+.cards-content .box-intro .box-project {
+    max-height: 200px;       /* ✅ 封顶高度 */
+            /* ✅ 超出后出滚动条 */
+    min-height: 0 !important; /* 🔥 核心：覆盖上面的 100px，激活滚动机制 */
 }
 
-/* 小于 720px (移动端) */
-@media (max-width: 720px) {
-  .container {
-    display: block; /* 移动端改为垂直排列 */
-    overflow-y: auto; /* 允许垂直滚动 */
-  }
-  .xs-hidden {
-    display: none;
-  }
-  .cards {
-    margin-bottom: 15px; /* 移动端增加间距 */
-  }
+.box-article {
+    flex-grow: 1;
+    min-height: 200px;
 }
 
-/* =========================================
-   4. 辅助工具类
-   ========================================= */
-/* 文字超出省略号 */
-.text-hidden {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+/* --- 右侧面板细节 --- */
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 网站列表 3x3 网格 */
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.link-item {
+    display: block;
+    aspect-ratio: 1 / 1;
+    background: rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.link-item:hover {
+    transform: scale(1.05);
+}
+
+.link-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 时间轴样式微调 */
+.timeline-content ul {
+    list-style: none;
+    padding-left: 10px;
+    border-left: 2px solid #ddd;
+}
+
+.timeline-content li {
+    margin-bottom: 8px;
+    font-size: 14px;
+    position: relative;
+    padding-left: 10px;
+}
+
+.timeline-content li::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    background: #999;
+    border-radius: 50%;
+}
+
+/* 播放器样式微调 */
+.music-player {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 40%;
+    height: 100%;
+    background: #666;
 }
 
 /* 滚动条美化 */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+    width: 6px;
+    height: 6px;
 }
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #eeeeee;
+    border-radius: 10px;
+    background-color: #eeeeee;
 }
-.align-left {
-    float: left;
-    padding-left:20px ;
-}
+.avatar {
+    /* 1. 给变量加个默认值（如 100px），防止变量未定义时头像消失 */
+    width: var(--r, 100px);
+    height: var(--r, 100px);
 
-/* 靠右 */
-.align-right {
-    float: right;
-    padding-right: 20px;
-    margin: 20px;
-}
-.avatar-user {
-    width: var(--r,90px);
-    height:var(--r,90px);
+    /* 2. 双重保险：防止任何情况下宽高不一致变成椭圆 */
+    aspect-ratio: 1 / 1; 
+    
     border-radius: 50%;
     overflow: hidden;
-    flex-shrink: 0; /* 防止被压缩 */
+
+    margin: 0 auto;
+    
+    /* 3. 兼容性修复：防止 iOS Safari 下圆角裁剪失效 */
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+
 }
-/* 播放器专属布局 */
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+    /* 4. 消除内联元素底部可能出现的几像素留白 */
+    display: block; 
+}
+/* --- 音乐播放器专用修复 --- */
+
+/* 1. 解除音乐卡片的高度限制，防止内容被裁剪 */
+.cards-content.music-card {
+    height: auto !important;      /* 移除最大高度限制 */
+    overflow: visible;     /* 确保内容不会被隐藏 */
+    min-height: 100px;     /* 保持最小高度，防止塌陷 */
+}
+
+/* 2. 优化播放器内部布局，防止挤压 */
 .music-player {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 30px 20px;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 让内容在垂直方向上均匀分布，避免挤到底部 */
+    height: 100%;                  /* 确保播放器占满卡片空间 */
+    padding: 15px;                 /* 增加内边距，防止文字贴边 */
+    box-sizing: border-box;
 }
 
-/* 专辑封面 */
-.album-cover {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%; /* 圆形封面 */
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  margin-bottom: 20px;
-}
-
-.album-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 歌曲信息 */
-.track-info {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.track-name {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.track-artist {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* 进度条区域 */
-.progress-area {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 20px;
-}
-
-/* 自定义滑块样式 (适配毛玻璃) */
-.seek-slider {
-  flex: 1;
-  -webkit-appearance: none;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.2);
-  outline: none;
-  cursor: pointer;
-}
-
-.seek-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-/* 播放控制按钮 */
-.player-controls {
-  display: flex;
-  align-items: center;
-  gap: 25px;
+/* 3. 修复 SVG 图标在按钮中的垂直对齐问题 */
+.play-btn svg {
+    display: block;
+    margin: 0 auto;
+    width: 24px;  /* 固定图标大小 */
+    height: 24px;
 }
 
 .control-btn {
@@ -254,25 +294,4 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.control-btn svg {
-  width: 28px;
-  height: 28px;
-}
-
-/* 播放/暂停按钮加大一圈 */
-.play-btn svg {
-  width: 45px;
-  height: 45px;
-}
-
-/* 按钮悬停和按压效果 */
-.control-btn:hover {
-  color: rgba(255, 255, 255, 0.8);
-  transform: scale(1.1);
-}
-
-.control-btn:active {
-  transform: scale(0.95);
 }
