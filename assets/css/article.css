@@ -1,0 +1,261 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        a,
+        a:link,
+        a:visited,
+        a:hover,
+        a:active,
+        a:focus {
+            text-decoration: none !important;
+            color: #ffffff !important;
+        }
+        body {
+            background: url('../img/bg.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: "Microsoft YaHei", sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px; /* 对应需求：窗口四周留出30px间隔 */
+        }
+
+        /* --- 核心布局 Grid --- */
+        .main-container {
+            width: 100%;
+            max-width: 1400px; /*稍微加宽一点以适应左右布局*/
+            height: 90vh; /* 让容器高度适应屏幕，配合overflow使用 */
+            display: grid;
+            /* 修改点：根据草图，左侧是固定宽度的侧边栏，右侧是自适应的内容区 */
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+
+        /* --- 通用卡片样式 (毛玻璃效果) --- */
+        .cards-content {
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px) saturate(150%);
+            -webkit-backdrop-filter: blur(12px) saturate(150%);
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 0 12px rgba(255, 255, 255, 0.05);
+
+            transform: scale(1) translateY(0);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        background-color 0.3s ease,
+                        box-shadow 0.3s ease;
+
+            width: 100%;
+            min-width: 0;
+            /* 注意：这里限制了最大高度，如果内容过多会出现滚动条 */
+            height: var(--a);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cards-content:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.08);
+        }
+
+        .cards-content p.text-hidden {
+            display: block !important;
+            width: 100% !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            margin: 4px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .label {
+            display: block;
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 12px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+        }
+
+        /* --- 左侧面板细节 --- */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+            overflow-y: auto; /* 允许左侧整体滚动 */
+        }
+
+        /* 隐藏左侧面板的滚动条但保留功能 */
+        .left-panel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .user-info-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+.avatar {
+    /* 1. 核心修复：直接使用固定像素，避免 var(--r) 未定义或计算错误导致变形 */
+    width: 100px !important;
+    height: 100px !important;
+
+    /* 2. 双重保险：即使 aspect-ratio 失效，也能保持正圆 */
+    min-width: 100px;
+    min-height: 100px;
+
+    /* 3. 保持圆形裁剪 */
+    border-radius: 50%;
+    overflow: hidden;
+
+    /* 4. 居中显示 */
+    margin: 0 auto 15px auto;
+
+    /* 5. 边框样式 */
+    border: 2px solid rgba(255,255,255,0.2);
+
+    /* 6. 关键防挤压属性：防止在 Grid/Flex 布局中被父容器压扁 */
+    flex-shrink: 0;
+}
+
+.avatar img {
+    /* 确保图片填满容器且不变形 */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+        .user-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .social-btn {
+            font-size: 12px;
+            padding: 5px 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .social-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .sidebar-widget {
+            /* 侧边栏小部件样式 */
+        }
+
+        .widget-list {
+            list-style: none;
+        }
+        .widget-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .widget-list li span.count {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        /* --- 右侧面板细节 --- */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .search-bar-card {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            min-height: 60px;
+        }
+        .search-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .article-list-area {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .article-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .article-item:last-child {
+            border-bottom: none;
+        }
+
+        .article-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            transition: color 0.3s;
+        }
+        .article-title:hover {
+            color: #aaa !important;
+        }
+
+        .article-meta {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 10px;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: rgba(255,255,255,0.2);
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
