@@ -71,7 +71,7 @@ def generate():
     articles = []
     category_count = {}
     year_count = {}
-
+    
     print(f"🔍 找到 {len(md_files)} 篇文章，开始处理...")
     for md_file in md_files:
         try:
@@ -83,6 +83,7 @@ def generate():
             category_count[cat] = category_count.get(cat, 0) + 1
             
             # 统计年份归档
+            
             year = article['date'][:4]
             year_count[year] = year_count.get(year, 0) + 1
         except Exception as e:
@@ -102,9 +103,12 @@ def generate():
             'is_detail_page': True,
             'sorts': [{'name': k, 'count': v} for k, v in category_count.items()],
             'archives': year_count,
-            'tags': [{'name': tag} for tag in set(sum([a['tags'] for a in articles], []))]
+            'tags': [{'name': tag} for tag in set(sum([a['tags'] for a in articles], []))],
+            'css': '../../assets/css/article.css',
+            'img': '../../assets/img/zycdzyj.jpg'
         }
-        detail_path = os.path.join(OUTPUT_DIR, article['link'])
+        os.makedirs(os.path.join(OUTPUT_DIR, year), exist_ok=True)
+        detail_path = os.path.join(OUTPUT_DIR, year, article['link'])
         with open(detail_path, 'w', encoding='utf-8') as f:
             f.write(template.render(**detail_context))
         print(f"   ✅ 生成: {article['title']}")
@@ -116,9 +120,12 @@ def generate():
         'is_detail_page': False,
         'sorts': [{'name': k, 'count': v} for k, v in category_count.items()],
         'archives': year_count,
-        'tags': [{'name': tag} for tag in set(sum([a['tags'] for a in articles], []))]
+        'tags': [{'name': tag} for tag in set(sum([a['tags'] for a in articles], []))],
+        'css': '../assets/css/article.css',
+        'img': '../assets/img/zycdzyj.jpg'
+        
     }
-    index_path = os.path.join(OUTPUT_DIR, 'index.html')
+    index_path = os.path.join(OUTPUT_DIR,'index.html')
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(template.render(**index_context))
 

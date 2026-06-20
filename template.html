@@ -5,14 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if is_detail_page %}{{ articles[0].title }} - {% endif %}zycdzyj 的博客</title>
     <!-- 注意：这里使用了相对路径，详情页和首页共用同一套 CSS -->
-    <link rel="stylesheet" href="../assets/css/article.css">
+    <link rel="stylesheet" href="{{css}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+// 2. 配置 marked.js 使用 highlight.js
+marked.setOptions({
+  highlight: (code, lang) => {
+    // 如果指定了语言，则按对应语言高亮
+    if (lang && hljs.getLanguage(lang)) {
+      return hljs.highlight(code, { language: lang }).value;
+    }
+    // 未指定语言则默认自动检测高亮
+    return hljs.highlightAuto(code).value;
+  }
+});
+
+// 3. 渲染 Markdown 并插入页面
+const markdownText = '```javascript\nconsole.log("Hello, world!");\n```';
+document.getElementById('preview').innerHTML = marked.parse(markdownText);
+</script>
 </head>
 <body>
     <div class="main-container">
         <aside class="left-panel">
             <!-- 用户信息 -->
             <div class="cards-content user-info-card">
-                <div class="avatar"><img src="../assets/img/zycdzyj.jpg" alt="Avatar"></div>
+                <div class="avatar"><img src="{{img}}" alt="Avatar"></div>
                 <div class="user-name">zycdzyj</div>
                 <p style="font-size:13px;opacity:0.8;">命运这种东西，生来就是要被踏于足下的。</p>
                 <div class="social-links">
@@ -42,7 +63,7 @@
                     <!-- 这里展示前5篇最新文章 -->
                     {% for article in articles[:5] %}
                     <li>
-                        <a href="{{ article.link }}" class="text-hidden">{{ article.title }}</a>
+                        <a href="{{ article.date[:4] }}/{{year}}{{ article.link }}" class="text-hidden">{{ article.title }}</a>
                         <span style="font-size:12px;opacity:0.6;">{{ article.date }}</span>
                     </li>
                     {% endfor %}
@@ -75,12 +96,12 @@
                 <input type="text" class="search-input" placeholder="输入关键词搜索...">
             </div>
 
-            <div class="cards-content article-list-area">
+            <div class="cards-content article-list-area no-hover">
                 <!-- 文章列表 -->
                 {% for article in articles %}
-                <div class="article-item">
+                <div class="article-item text-container " >
                     <!-- 详情页链接 -->
-                    <a href="{{ article.link }}" class="article-title">{{ article.title }}</a>
+                    <a href="{post/{{year}}/{{ year }}年 {{ count }}{{ article.link }}}" class="article-title">{{ article.title }}</a>
                     <div class="article-meta">
                         <span>📅 {{ article.date }}</span>
                         <span>📂 {{ article.category }}</span>
@@ -92,7 +113,7 @@
                         </span>
                     </div>
                     <!-- 这里简单截取前100个字符作为摘要 -->
-                    <p class="text-hidden">{{ article.content[:100] }}...</p>
+                    <p>{{article.content}}</p>
                 </div>
                 {% endfor %}
             </div>

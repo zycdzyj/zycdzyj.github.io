@@ -3,16 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hello - zycdzyj 的博客</title>
+    <title>宁波科创中学 - zycdzyj 的博客</title>
     <!-- 注意：这里使用了相对路径，详情页和首页共用同一套 CSS -->
-    <link rel="stylesheet" href="../assets/css/article.css">
+    <link rel="stylesheet" href="../../assets/css/article.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/common.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+// 2. 配置 marked.js 使用 highlight.js
+marked.setOptions({
+  highlight: (code, lang) => {
+    // 如果指定了语言，则按对应语言高亮
+    if (lang && hljs.getLanguage(lang)) {
+      return hljs.highlight(code, { language: lang }).value;
+    }
+    // 未指定语言则默认自动检测高亮
+    return hljs.highlightAuto(code).value;
+  }
+});
+
+// 3. 渲染 Markdown 并插入页面
+const markdownText = '```javascript\nconsole.log("Hello, world!");\n```';
+document.getElementById('preview').innerHTML = marked.parse(markdownText);
+</script>
 </head>
 <body>
     <div class="main-container">
         <aside class="left-panel">
             <!-- 用户信息 -->
             <div class="cards-content user-info-card">
-                <div class="avatar"><img src="../assets/img/zycdzyj.jpg" alt="Avatar"></div>
+                <div class="avatar"><img src="../../assets/img/zycdzyj.jpg" alt="Avatar"></div>
                 <div class="user-name">zycdzyj</div>
                 <p style="font-size:13px;opacity:0.8;">命运这种东西，生来就是要被踏于足下的。</p>
                 <div class="social-links">
@@ -28,13 +49,8 @@
                 <ul class="widget-list">
                     
                     <li>
-                        <a href="#">hello</a>
-                        <span class="count">1</span>
-                    </li>
-                    
-                    <li>
-                        <a href="#">未分类</a>
-                        <span class="count">1</span>
+                        <a href="#">技术</a>
+                        <span class="count">2</span>
                     </li>
                     
                 </ul>
@@ -47,8 +63,8 @@
                     <!-- 这里展示前5篇最新文章 -->
                     
                     <li>
-                        <a href="2026-06-19_hello.html" class="text-hidden">hello</a>
-                        <span style="font-size:12px;opacity:0.6;">2026-06-19</span>
+                        <a href="2024/2024-05-20_宁波科创中学.html" class="text-hidden">宁波科创中学</a>
+                        <span style="font-size:12px;opacity:0.6;">2024-05-20</span>
                     </li>
                     
                 </ul>
@@ -59,9 +75,7 @@
                 <span class="label">时间归档</span>
                 <ul class="widget-list">
                     
-                    <li><a href="#">2026年 (1)</a></li>
-                    
-                    <li><a href="#">1970年 (1)</a></li>
+                    <li><a href="#">2024年 (2)</a></li>
                     
                 </ul>
             </div>
@@ -71,9 +85,13 @@
                 <span class="label">热门标签</span>
                 <div style="display:flex;flex-wrap:wrap;gap:8px;">
                     
-                    <a href="#" class="social-btn">技术</a>
+                    <a href="#" class="social-btn">教程</a>
                     
-                    <a href="#" class="social-btn">未标签</a>
+                    <a href="#" class="social-btn">宁波科创中学</a>
+                    
+                    <a href="#" class="social-btn">博客</a>
+                    
+                    <a href="#" class="social-btn">Python</a>
                     
                 </div>
             </div>
@@ -84,24 +102,24 @@
                 <input type="text" class="search-input" placeholder="输入关键词搜索...">
             </div>
 
-            <div class="cards-content article-list-area">
+            <div class="cards-content article-list-area no-hover">
                 <!-- 文章列表 -->
                 
-                <div class="article-item">
+                <div class="article-item text-container " >
                     <!-- 详情页链接 -->
-                    <a href="2026-06-19_hello.html" class="article-title">hello</a>
+                    <a href="{post//年 2024-05-20_宁波科创中学.html}" class="article-title">宁波科创中学</a>
                     <div class="article-meta">
-                        <span>📅 2026-06-19</span>
-                        <span>📂 hello</span>
+                        <span>📅 2024-05-20</span>
+                        <span>📂 技术</span>
                         <span>🏷️ 
                             <!-- 显示文章的所有标签 -->
                             
-                                技术
+                                宁波科创中学
                             
                         </span>
                     </div>
                     <!-- 这里简单截取前100个字符作为摘要 -->
-                    <p class="text-hidden"><p>awd</p>...</p>
+                    <p><h1>宁波科创中学 I FUCK YOU!</h1></p>
                 </div>
                 
             </div>

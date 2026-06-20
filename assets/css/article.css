@@ -67,23 +67,30 @@
             flex-direction: column;
         }
 
-        .cards-content:hover {
+        .cards-content:not(.no-hover):hover {
             transform: translateY(-6px) scale(1.02);
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), inset 0 0 12px rgba(255, 255, 255, 0.08);
         }
-
-        .cards-content p.text-hidden {
-            display: block !important;
-            width: 100% !important;
-            white-space: nowrap !important;
-            overflow: hidden !important;
-            text-overflow: ellipsis !important;
-            margin: 4px 0;
-            font-size: 14px;
-            line-height: 1.5;
-            color: rgba(255,255,255,0.7);
-        }
-
+.cards-content p.text-hidden {
+    display: block !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin: 4px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.7);
+    min-width: 0; /* 防止在 Flex 布局中撑破容器 */
+}
+/* 👇 专门用于包裹长文本，强制换行且绝不撑破卡片 */
+.text-container {
+    width: 100%;
+    min-width: 0; /* 🔥 核心防御：允许在 Grid/Flex 中收缩 */
+    overflow-wrap: break-word; /* 遇到长单词/长链接强制换行 */
+    word-break: break-word;    /* 兼容旧浏览器 */
+    white-space: normal;       /* 确保允许正常换行 */
+}
         .label {
             display: block;
             font-size: 14px;
