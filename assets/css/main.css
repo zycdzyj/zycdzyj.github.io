@@ -306,3 +306,126 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+/* ==================== 个人主页：单卡片居中布局 ==================== */
+
+/* 页面外层容器：宽度由卡片内容决定，由 body 的 flex 负责居中 */
+.profile-container {
+    width: fit-content;
+    max-width: 100%;
+}
+
+/* 主卡片：上下弹性布局（上头像 + 下内容），宽度贴合文字 */
+.profile-card {
+    --a: 82vh;                    /* 覆盖 .cards-content 的 max-height 变量 */
+    display: flex;
+    flex-direction: column;       /* 上下弹性布局 */
+    align-items: center;          /* 头像水平居中 */
+    gap: 18px;
+    padding: 28px;
+    width: fit-content;           /* 宽度收缩到最长那一行文字 */
+    max-width: 100%;              /* 超出可用宽度时文字自动换行，不溢出 */
+    min-height: min(620px, 76vh);
+}
+
+/* 内容区：纵向排列，宽度跟随卡片 */
+.profile-body {
+    flex: 1 1 auto;
+    min-width: 0;                 /* 允许在 flex 布局中收缩，防止撑破卡片 */
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    text-align: center;           /* 内部文字居中 */
+}
+
+/* 头像：圆形（无边框） */
+.avatar-circle {
+    width: var(--r, 128px);
+    height: var(--r, 128px);
+    aspect-ratio: 1 / 1;          /* 双重保险：永远是正圆 */
+    flex: 0 0 auto;
+    align-self: center;           /* 水平居中，不被 stretch 拉伸 */
+
+    margin: 0 auto;
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+
+    /* 兼容性修复：防止 iOS Safari 下圆角裁剪失效 */
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+.avatar-circle img {
+    display: block;               /* 消除内联元素底部留白 */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* 两行占位行：可留空，也可直接填入内容 */
+.blank-row {
+    width: 100%;
+    min-height: 46px;             /* 空行时保持占位高度，有内容时自动撑高 */
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;      /* 内部内容水平居中 */
+    text-align: center;           /* 多行文字居中 */
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* 行内标题（默认字号偏大，这里做适配，可按需调整） */
+.blank-row h1 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* 技能图标行 */
+.skills {
+    width: 100%;
+    text-align: center;           /* 图标水平居中 */
+    line-height: 0;               /* 消除行内元素底部的默认留白 */
+}
+
+.skills img {
+    max-width: 100%;              /* 屏窄时等比缩放，不撑破卡片 */
+    height: auto;
+}
+
+/* 下方留白区域：自动撑满卡片剩余高度 */
+.blank-area {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 120px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 取消卡片悬停时的上浮 + 放大效果 */
+.cards-content.profile-card:hover {
+    transform: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+    .profile-card {
+        min-height: auto;
+        padding: 20px;
+    }
+
+    .avatar-circle {
+        --r: 104px;
+    }
+
+    .blank-row {
+        min-height: 40px;
+    }
+}

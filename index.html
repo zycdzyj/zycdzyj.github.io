@@ -1,158 +1,48 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人主页</title>
-    <!-- 保持原有的CSS链接 -->
+    <!-- 全局样式：body 背景已使用 assets/img/bg.png -->
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
+
 <body>
-  <div id="glass-loader" style="
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    backdrop-filter: blur(30px); /* 初始状态：强毛玻璃模糊 */
-    -webkit-backdrop-filter: blur(30px); /* 兼容 Safari */
-    background-color: rgba(0, 0, 0, 0.2); /* 稍微加点黑色半透明蒙层，质感更好 */
-    display: flex; justify-content: center; align-items: center;
-    z-index: 9999;
-    transition: backdrop-filter 2.5s ease-out, opacity 0.8s ease; /* 模糊度降低和最后的淡出过渡 */
-  ">
-    <div class="loading-text " style="
-      color: #fff; font-size: 24px; font-weight: bold; letter-spacing: 2px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);text-align: center;
-    "><p>Loading . . .</p><p>  Welcome to zycdzyj's home page :)</p></div>
-  </div>
-    <!-- 页面主容器 -->
-    <div class="main-container">
+    <!-- 页面外层容器：限制宽度并水平居中 -->
+    <div class="profile-container">
 
-        <!-- ================= 左侧区域 (Left Panel) ================= -->
-        <div class="left-panel">
+        <!-- 主卡片（毛玻璃效果）：上下弹性布局，上头像 + 下内容 -->
+        <div class="cards-content profile-card">
 
-            <!-- 1. 用户名 -->
-<div class="user-name-box cards-content">
-    <img src="assets/img/zycdzyj.jpg" class="avatar" style="--r:70px;">
-    <h1 class="text-hide">zycdzyj</h1> 
-</div>
-
-            <!-- 2. 第一行：个人介绍 & 个人项目 -->
-            <div class="row-split">
-<div class="box box-intro cards-content "style='--a:180px;'>
-    <span class="label">个人介绍</span>
-        <p class="text-hidden" >Github开发者</p>
-        <p class="text-hidden" >Python编程爱好者</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-        <p class="text-hidden" >Python编程学习者</p>
-        <p class="text-hidden">INTP</p>
-        <p class="text-hidden" >Minecraft爱好者</p>
-        <p class="text-hidden" >Minecraft挂圈/指令玩家</p>
-        <p class="text-hidden" >地狱潜者2玩家</p>
-        <p class="text-hidden">soulmask</p>
-        <p class="text-hidden" >科创大冤种</p>
-        <p class="text-hidden" >喜欢女生</p>
-</div>
-
-                <div class="box box-project cards-content">
-                    <span class="label">个人项目</span>
-        <p class="text-hidden" title="破晓音乐 v1.50 - 点击访问">破晓音乐 v1.50 <a href="https://github.com/zycdzyj/Daybreakmusic/">-点击访问</a></p>
-        <p class="text-hidden" title="宁波科创中学(非官网) - 点击访问">宁波科创中学(非官网) <a href="https://github.com/gh-nbkczx/gh-nbkczx.github.io">-点击访问</a></p>
-        <p class="text-hidden" title="个人主页 - 点击访问">个人主页 <a href="https://github.com/zycdzyj/personalwebsite">-点击访问</a></p>
-        <p class="text-hidden" title="宁波科创中学静态博客管理器(测试) - 点击访问">宁波科创中学静态博客管理器(测试) <a href="https://github.com/zycdzyj/artical_maker">-点击访问</a></p>
-                </div>
+            <!-- ① 头像：位于圆形框内 -->
+            <div class="avatar-circle">
+                <img src="assets/img/zycdzyj.jpg" alt="头像">
             </div>
 
-            <!-- 3. 空间签名 -->
-            <div class="box box-signature cards-content">
-                <span class="label">空间签名</span>
-                <p class="content-text text-hide" id="my-text"></p>
-            </div>
+            <!-- ② 内容区：纵向排列 -->
+            <div class="profile-body">
 
-            <!-- 4. 文章区域 -->
-            <div class="box box-article cards-content">
-                <span class="label">留言</span>
-                <div class="article-list">
-                    <!-- 原有的文章列表循环 -->
-                    <div class="article-item text-hide">
-                        <h3 >联系方式:</h3>
-                <div class="social-links">
-                    <a href="https://github.com/zycdzyj" class="social-btn">Github</a>
-                    <a href="mailto:3969204597@qq.com" class="social-btn">Email</a>
-                    <a href="https://bilibili.com" class="social-btn">Bilibili</a>
-                </div>
-                    </div>
+                <!-- 第一行（后续可在此填充内容） -->
+                <div class="blank-row"><h1>每个生命都是朝圣的漫游,每条路都是通向自我的征途.</h1></div>
 
-                </div>
+                <!-- 第二行：留空（后续可在此填充内容） -->
+                <div class="blank-row"><h1>Typescript,Pythpn学习者开发者,电报圈,挂圈,接口逆向,微信无违规</h1></div>
+
+                <!-- 第三行：技能图标 -->
+                <p class="skills">
+                    <a href="https://skillicons.dev" target="_blank" rel="noopener noreferrer">
+                        <img src="https://skillicons.dev/icons?i=python,typescript,html,css,js,vscode,powershell,git"
+                             alt="My Skills: Python, TypeScript, HTML, CSS, JS, VSCode, powershell, git">
+                    </a>
+                </p>
+
             </div>
 
         </div>
 
-        <!-- ================= 右侧区域 (Right Panel) ================= -->
-        <div class="right-panel">
-
-            <!-- 5. 网站列表 (前9个) -->
-            <div class="box box-links cards-content" style="--a:500px">
-                <span class="label">网站列表</span>
-                <div class="link-grid">
-                    <a href="https://yandex.com" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/yandex.png" alt="yandex"></a>
-                    <a href="https://github.com" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/github.png" alt="github"></a>
-                    <a href="https://www.ip138.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/ip138.png" alt="ip138"></a>
-                    <a href="https://www.mcjs.cc/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/jsmc.png" alt="mcjs"></a>
-                    <a href="https://www.aliyun.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/aly.jpg" alt="aly"></a>
-                    <a href="https://www.bilibili.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/bilbil.png" alt="bilbil"></a>
-                    <a href="https://www.instagram.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/ins.png" alt="ins"></a>
-                    <a href="https://www.youtube.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/youtube.png" alt="youtube"></a>
-                    <a href="https://www.x.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/x.png" alt="x"></a>
-                    <a href="https://www.telegram.org" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/tg.ico" alt="telegram"></a>
-                    <a href="https://wikipedia.org" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/wikipedia.png" alt="wikipedia"></a>
-                    <a href="https://tim.qq.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/tim.jpg" alt="tim"></a>
-                    <a href="https://www.google.com" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/google.png" alt="google"></a>
-                    <a href="https://www.whatsapp.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/wa.webp" alt="whatsapp"></a>
-                    <a href="https://wx.qq.com/" class="link-item avatar text-hidden" style="--r:50px"><img src="assets/img/wx.png" alt="wx"></a>
-                </div>
-            </div>
-
-            <!-- 6. 时间轴 -->
-            <div class="box box-timeline cards-content">
-                <span class="label">时间</span>
-                <div class="">
-                    <!-- 原有的时间轴代码 -->
-                    <ul>
-                        <h3 class="text-hide" id="time"></h3>
-                        <h3 class="text-hide" id="date"></h3>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 7. 音乐播放器 -->
-<div class="cards-content music-player container music-card user">
-
-  <!-- 隐藏的音频标签 (使用你提供的网易云外链) -->
-  <audio id="audio" src="http://music.163.com/song/media/outer/url?id=1325892124.mp3"></audio>
-
-  <!-- 歌曲信息 -->
-  <div class="track-info">
-    <h3 class="track-name text-hidden">Pagoda</h3>
-    <p class="track-artist text-hidden">Xomu</p>
-  </div>
-
-  <!-- 进度条与时间 -->
-  <div class="progress-area">
-    <span class="current-time">0:00</span>
-    <input type="range" id="progress-bar" class="seek-slider" min="0" max="100" value="0">
-    <span class="total-duration">0:00</span>
-  </div>
-
-  <!-- 播放控制按钮 -->
-  <div class="player-controls">
-    <button class="control-btn play-btn" id="play-btn">
-      <!-- 播放图标 -->
-      <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-      <!-- 暂停图标 (默认隐藏) -->
-      <svg class="pause-icon" style="display: none;" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-    </button>
-  </div>
-</div>
-</div>
     </div>
-
-    <!-- 保持原有的JS脚本引用 -->
-    <script src="assets/js/main.js"></script>
 </body>
+
 </html>
