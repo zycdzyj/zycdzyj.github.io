@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#17211f">
+	<title>朝圣道的网盘</title>
+	<link rel="stylesheet" href="assets/css/main.css">
+	<style>
+		body {
+			zoom: 1;
+			padding: 24px;
+		}
+
+		.pan-card {
+			--a: none;
+			width: min(1120px, 100%);
+			height: min(820px, calc(100vh - 48px));
+			min-height: 480px;
+			display: flex;
+			flex-direction: column;
+			gap: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+
+		.cards-content.pan-card:hover {
+			transform: none;
+		}
+
+		.pan-header {
+			display: flex;
+			align-items: center;
+			gap: 24px;
+			padding: 18px 24px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+		}
+
+		.brand {
+			flex: 0 0 auto;
+			color: #fff;
+			font-size: 20px;
+			font-weight: 700;
+		}
+
+		.search-wrap {
+			position: relative;
+			flex: 1;
+			max-width: 520px;
+			margin: 0 auto;
+		}
+
+		.search-input {
+			width: 100%;
+			min-width: 0;
+			padding: 11px 14px;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			border-radius: 8px;
+			outline: none;
+			background: rgba(0, 0, 0, 0.2);
+			color: #fff;
+			font: inherit;
+			transition: border-color 0.2s ease, background 0.2s ease;
+		}
+
+		.search-input {
+			padding-right: 42px;
+		}
+
+		.search-input::placeholder {
+			color: rgba(255, 255, 255, 0.58);
+		}
+
+		.search-input:focus {
+			border-color: rgba(255, 255, 255, 0.6);
+			background: rgba(0, 0, 0, 0.3);
+		}
+
+		.clear-search {
+			position: absolute;
+			top: 50%;
+			right: 8px;
+			width: 30px;
+			height: 30px;
+			transform: translateY(-50%);
+			border: 0;
+			border-radius: 6px;
+			background: transparent;
+			color: #fff;
+			font-size: 20px;
+			cursor: pointer;
+		}
+
+		.clear-search:hover {
+			background: rgba(255, 255, 255, 0.14);
+		}
+
+		.pan-body {
+			display: flex;
+			flex: 1;
+			flex-direction: column;
+			min-height: 0;
+			padding: 22px 24px 24px;
+		}
+
+		.list-heading {
+			display: flex;
+			align-items: baseline;
+			justify-content: space-between;
+			gap: 12px;
+			margin-bottom: 14px;
+		}
+
+		.list-heading h1 {
+			margin: 0;
+			color: #fff;
+			font-size: 17px;
+			font-weight: 600;
+		}
+
+		.file-count {
+			color: rgba(255, 255, 255, 0.64);
+			font-size: 13px;
+		}
+
+		.file-list {
+			flex: 1;
+			min-height: 0;
+			overflow-y: auto;
+			padding: 2px 4px 2px 0;
+			scrollbar-color: rgba(255, 255, 255, 0.45) transparent;
+			scrollbar-width: thin;
+		}
+
+		.file-row {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			min-height: 58px;
+			padding: 8px 10px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			border-radius: 7px;
+			transition: background 0.18s ease;
+		}
+
+		.file-row:hover {
+			background: rgba(255, 255, 255, 0.08);
+		}
+
+		.file-link {
+			display: flex;
+			flex: 1;
+			align-items: center;
+			gap: 12px;
+			min-width: 0;
+			color: #fff !important;
+		}
+
+		.file-icon {
+			display: grid;
+			flex: 0 0 38px;
+			width: 38px;
+			height: 38px;
+			place-items: center;
+			border-radius: 9px;
+			background: rgba(255, 255, 255, 0.12);
+			color: rgba(255, 255, 255, 0.9);
+			font-size: 17px;
+		}
+
+		.file-name {
+			overflow: hidden;
+			font-size: 14px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.file-url {
+			overflow: hidden;
+			margin-left: auto;
+			color: rgba(255, 255, 255, 0.56);
+			font-size: 12px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.empty-state {
+			display: grid;
+			min-height: 220px;
+			place-content: center;
+			gap: 8px;
+			color: rgba(255, 255, 255, 0.72);
+			text-align: center;
+		}
+
+		.empty-state strong {
+			color: #fff;
+			font-size: 15px;
+			font-weight: 500;
+		}
+
+		.empty-state span {
+			font-size: 13px;
+		}
+
+		@media (max-width: 640px) {
+			body {
+				padding: 12px;
+			}
+
+			.pan-card {
+				height: calc(100vh - 24px);
+				min-height: 420px;
+			}
+
+			.pan-header {
+				flex-wrap: wrap;
+				gap: 12px;
+				padding: 16px;
+			}
+
+			.brand {
+				flex: 1;
+				font-size: 18px;
+			}
+
+			.search-wrap {
+				order: 3;
+				flex: 1 0 100%;
+				max-width: none;
+			}
+
+			.pan-body {
+				padding: 18px 14px 14px;
+			}
+
+			.file-row {
+				gap: 8px;
+				padding-right: 4px;
+				padding-left: 4px;
+			}
+
+			.file-url {
+				display: none;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			*,
+			*::before,
+			*::after {
+				scroll-behavior: auto !important;
+				transition-duration: 0.01ms !important;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="cards-content pan-card">
+		<header class="pan-header">
+			<a class="brand" href="index.html">朝圣道的网盘</a>
+			<label class="search-wrap">
+				<span class="sr-only" hidden>搜索文件</span>
+				<input class="search-input" id="search-input" type="search" placeholder="搜索文件名称" autocomplete="off" aria-label="搜索文件名称">
+				<button class="clear-search" id="clear-search" type="button" aria-label="清除搜索" title="清除搜索" hidden>&times;</button>
+			</label>
+		</header>
+
+		<section class="pan-body" aria-labelledby="list-title">
+			<div class="list-heading">
+				<h1 id="list-title">文件列表</h1>
+				<span class="file-count" id="file-count" aria-live="polite"></span>
+			</div>
+			<div class="file-list" id="file-list" aria-live="polite"></div>
+		</section>
+	</main>
+
+	<script>
+		(() => {
+			const listElement = document.getElementById('file-list');
+			const countElement = document.getElementById('file-count');
+			const searchInput = document.getElementById('search-input');
+			const clearSearchButton = document.getElementById('clear-search');
+			let files = [];
+
+			function isSubsequence(query, value) {
+				let queryIndex = 0;
+				for (const character of value.toLocaleLowerCase()) {
+					if (character === query[queryIndex]) queryIndex += 1;
+					if (queryIndex === query.length) return true;
+				}
+				return query.length === 0;
+			}
+
+			function displayUrl(url) {
+				try {
+					return new URL(url, window.location.href).host || url;
+				} catch {
+					return url;
+				}
+			}
+
+			function isSafeUrl(url) {
+				try {
+					return ['http:', 'https:', 'file:'].includes(new URL(url, window.location.href).protocol);
+				} catch {
+					return false;
+				}
+			}
+
+			function showMessage(titleText, hintText) {
+				listElement.replaceChildren();
+				const empty = document.createElement('div');
+				empty.className = 'empty-state';
+				const title = document.createElement('strong');
+				const hint = document.createElement('span');
+				title.textContent = titleText;
+				hint.textContent = hintText;
+				empty.append(title, hint);
+				listElement.append(empty);
+			}
+
+			function render() {
+				const query = searchInput.value.trim().toLocaleLowerCase();
+				const filtered = files.filter((file) => isSubsequence(query, file.name.toLocaleLowerCase()));
+
+				countElement.textContent = query ? `${filtered.length} / ${files.length} 项` : `${files.length} 项`;
+				clearSearchButton.hidden = query.length === 0;
+				listElement.replaceChildren();
+
+				if (filtered.length === 0) {
+					if (files.length === 0) {
+						showMessage('这里还没有文件', '请在 assets/data/pan-files.json 中配置文件链接。');
+					} else {
+						showMessage('没有找到匹配的文件', '试试更短的关键词');
+					}
+					return;
+				}
+
+				const fragment = document.createDocumentFragment();
+				for (const file of filtered) {
+					const row = document.createElement('div');
+					row.className = 'file-row';
+
+					const link = document.createElement('a');
+					link.className = 'file-link';
+					link.href = file.url;
+					link.title = file.name;
+					link.setAttribute('aria-label', `${file.name}，打开文件链接`);
+					if (/^https?:\/\//i.test(file.url)) {
+						link.target = '_blank';
+						link.rel = 'noopener noreferrer';
+					}
+
+					const icon = document.createElement('span');
+					icon.className = 'file-icon';
+					icon.setAttribute('aria-hidden', 'true');
+					icon.textContent = '↗';
+
+					const name = document.createElement('span');
+					name.className = 'file-name';
+					name.textContent = file.name;
+
+					const url = document.createElement('span');
+					url.className = 'file-url';
+					url.textContent = displayUrl(file.url);
+
+					link.append(icon, name, url);
+					row.append(link);
+					fragment.append(row);
+				}
+				listElement.append(fragment);
+			}
+			searchInput.addEventListener('input', render);
+			clearSearchButton.addEventListener('click', () => {
+				searchInput.value = '';
+				searchInput.focus();
+				render();
+			});
+			async function loadFiles() {
+				countElement.textContent = '';
+				showMessage('正在加载文件列表', '');
+				try {
+					const response = await fetch('assets/data/pan-files.json', { cache: 'no-cache' });
+					if (!response.ok) throw new Error('Failed to load file list');
+					const data = await response.json();
+					if (!Array.isArray(data)) throw new Error('File list must be an array');
+					files = data
+						.filter((file) => file && typeof file.name === 'string' && typeof file.url === 'string')
+						.map((file) => ({ name: file.name.trim(), url: file.url.trim() }))
+						.filter((file) => file.name && isSafeUrl(file.url));
+					render();
+				} catch {
+					countElement.textContent = '';
+					showMessage('文件列表加载失败', '请检查 JSON 文件，并通过 HTTP(S) 访问页面。');
+				}
+			}
+
+			loadFiles();
+		})();
+	</script>
+</body>
+</html>

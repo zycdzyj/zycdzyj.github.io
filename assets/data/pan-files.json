@@ -1,0 +1,10 @@
+[
+  {
+    "name": "项目资料.zip",
+    "url": "https://example.com/project.zip"
+  },
+  {
+    "name": "酷狗音乐api",
+    "url": "./assets/files/kugou.py"
+  }
+]
