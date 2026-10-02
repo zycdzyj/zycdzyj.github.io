@@ -157,6 +157,7 @@
 		}
 
 		.file-icon {
+			position: relative;
 			display: grid;
 			flex: 0 0 38px;
 			width: 38px;
@@ -165,7 +166,30 @@
 			border-radius: 9px;
 			background: rgba(255, 255, 255, 0.12);
 			color: rgba(255, 255, 255, 0.9);
-			font-size: 17px;
+		}
+
+		.file-icon svg {
+			width: 21px;
+			height: 21px;
+		}
+
+		.file-icon.has-text svg {
+			opacity: 0.32;
+		}
+
+		.file-icon-text {
+			position: absolute;
+			inset: 0;
+			display: grid;
+			place-items: center;
+			padding: 0 2px;
+			overflow: hidden;
+			color: #fff;
+			font-size: 10px;
+			font-weight: 700;
+			letter-spacing: 0.02em;
+			text-transform: uppercase;
+			white-space: nowrap;
 		}
 
 		.file-name {
@@ -283,6 +307,30 @@
 			const clearSearchButton = document.getElementById('clear-search');
 			let files = [];
 
+			const FILE_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>';
+			const URL_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><ellipse cx="12" cy="12" rx="4" ry="9"/></svg>';
+
+			function createIcon(format) {
+				const icon = document.createElement('span');
+				icon.className = 'file-icon';
+				icon.setAttribute('aria-hidden', 'true');
+				const value = typeof format === 'string' ? format.trim() : '';
+				const keyword = value.toLocaleLowerCase();
+				if (keyword === 'url') {
+					icon.innerHTML = URL_ICON_SVG;
+				} else if (keyword && keyword !== 'file') {
+					icon.classList.add('has-text');
+					icon.innerHTML = FILE_ICON_SVG;
+					const label = document.createElement('span');
+					label.className = 'file-icon-text';
+					label.textContent = value.slice(0, 5);
+					icon.append(label);
+				} else {
+					icon.innerHTML = FILE_ICON_SVG;
+				}
+				return icon;
+			}
+
 			function isSubsequence(query, value) {
 				let queryIndex = 0;
 				for (const character of value.toLocaleLowerCase()) {
@@ -330,7 +378,7 @@
 
 				if (filtered.length === 0) {
 					if (files.length === 0) {
-						showMessage('这里还没有文件', '请在 assets/data/pan-files.json 中配置文件链接。');
+						showMessage('这里还没有文件', '请在 assets/data/pan-files.json 中配置文件链接。format 留空显示文件图标，填 url 显示链接图标，填其它文字则叠加显示该文字。');
 					} else {
 						showMessage('没有找到匹配的文件', '试试更短的关键词');
 					}
@@ -352,10 +400,7 @@
 						link.rel = 'noopener noreferrer';
 					}
 
-					const icon = document.createElement('span');
-					icon.className = 'file-icon';
-					icon.setAttribute('aria-hidden', 'true');
-					icon.textContent = '↗';
+					const icon = createIcon(file.format);
 
 					const name = document.createElement('span');
 					name.className = 'file-name';
@@ -387,7 +432,11 @@
 					if (!Array.isArray(data)) throw new Error('File list must be an array');
 					files = data
 						.filter((file) => file && typeof file.name === 'string' && typeof file.url === 'string')
-						.map((file) => ({ name: file.name.trim(), url: file.url.trim() }))
+						.map((file) => ({
+							name: file.name.trim(),
+							url: file.url.trim(),
+							format: typeof file.format === 'string' ? file.format.trim() : ''
+						}))
 						.filter((file) => file.name && isSafeUrl(file.url));
 					render();
 				} catch {
